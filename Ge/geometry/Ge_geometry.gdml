@@ -1,0 +1,68 @@
+<solids>
+    <box name="WorldSolid" x="world_size" y="world_size" z="world_size" lunit="mm"/>
+    
+    <!-- {{{ Ge density = 5.32 g/cm^3, m = 2 kg -->
+    
+    <box name="GeSolid" x="72" y="72" z="72" lunit="mm"/>
+    <box name="CuSolidFilled" x="82" y="82" z="82" lunit="mm"/>
+    <box name="SteelSolid" x="50" y="20" z="50" lunit="mm"/>
+    
+    
+   
+
+<subtraction name="CuSolid">
+        <first ref="CuSolidFilled"/> 
+        <second ref="GeSolid"/>
+    </subtraction>
+
+</solids>
+
+<structure>
+
+   <!-- {{{ Volumes definition (material and solid assignment) -->
+
+    <volume name="GeVolume">
+        <materialref ref="G4_Ge"/>
+        <solidref ref="GeSolid"/>
+    </volume>
+    
+    <volume name="CuVolume">
+        <materialref ref="Copper"/>
+        <solidref ref="CuSolid"/>
+    </volume>
+    
+    <volume name="SteelVolume">
+        <materialref ref="G4_STAINLESS-STEEL"/>
+        <solidref ref="SteelSolid"/>
+    </volume>
+   
+
+    <!-- }}} -->
+
+    <!-- {{{ Physical volume definition (volume and position assignment) -->
+
+        <volume name="World">
+        <materialref ref="Air"/>
+        <solidref ref="WorldSolid"/>
+
+        <physvol name="detector">
+            <volumeref ref="GeVolume"/>
+            <position name="GePosition"  x="0" y="0" z="0" unit="mm"/>
+        </physvol>
+        
+        <physvol name="capa_cobre">
+            <volumeref ref="CuVolume"/>
+            <position name="CuPosition"  x="0" y="0" z="0" unit="mm"/>
+        </physvol>
+        
+        <physvol name="bloque_acero">
+            <volumeref ref="SteelVolume"/>
+            <position name="SteelPosition"  x="0" y="51" z="0" unit="mm"/>
+        </physvol>
+       
+        
+   </volume>
+    <!-- }}} -->
+
+</structure>
+
