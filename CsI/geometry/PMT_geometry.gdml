@@ -1,0 +1,60 @@
+<solids>
+    <box name="WorldSolid" x="world_size" y="world_size" z="world_size" lunit="mm"/>
+    <tube name="detectorSolid" startphi="0" deltaphi="360" rmin="0" rmax="25" z="50" aunit="deg" lunit="mm" />
+    <tube name="AlSolidFilled" startphi="0" deltaphi="360" rmin="0" rmax="27" z="52" aunit="deg" lunit="mm" />
+<tube name="PMTSolid" startphi="0" deltaphi="360" rmin="0" rmax="27" z="50" aunit="deg" lunit="mm" />
+
+<subtraction name="AlSolid">
+        <first ref="AlSolidFilled"/> 
+        <second ref="detectorSolid"/>
+    </subtraction>
+
+</solids>
+
+<structure>
+
+   <!-- {{{ Volumes definition (material and solid assignment) -->
+
+    <volume name="detectorVolume">
+        <materialref ref="G4_SODIUM_IODIDE"/>
+        <solidref ref="detectorSolid"/>
+    </volume>
+    
+    <volume name="AlVolume">
+        <materialref ref="Aluminium"/>
+        <solidref ref="AlSolid"/>
+    </volume>
+    
+    <volume name="PMTVolume">
+        <materialref ref="Aluminium"/>
+        <solidref ref="PMTSolid"/>
+    </volume>
+
+    <!-- }}} -->
+
+    <!-- {{{ Physical volume definition (volume and position assignment) -->
+
+        <volume name="World">
+        <materialref ref="Air"/>
+        <solidref ref="WorldSolid"/>
+
+        <physvol name="detector">
+            <volumeref ref="detectorVolume"/>
+            <position name="detectorPosition"  x="0" y="0" z="25" unit="mm"/>
+        </physvol>
+        
+        <physvol name="capa_alumnio">
+            <volumeref ref="AlVolume"/>
+            <position name="AlPosition"  x="0" y="0" z="24" unit="mm"/>
+        </physvol>
+        
+        <physvol name="PMT">
+            <volumeref ref="PMTVolume"/>
+            <position name="PMTPosition"  x="0" y="0" z="75" unit="mm"/>
+        </physvol>
+        
+   </volume>
+    <!-- }}} -->
+
+</structure>
+
